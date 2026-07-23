@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" :class="{'dark':dark}" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Rafiul — Artificial Intelligence Engineer and Research Enthusiast. Fast, clean and accessible digital products.">
+<meta name="keywords" content="freelance developer, UI designer, portfolio, Tailwind CSS, Alpine.js">
+<meta name="author" content="Rafiul">
+<meta property="og:title" content="Rafiul — AI Engineer">
+<meta property="og:description" content="I design and build digital products that people love to use.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eliott.dev">
+<title>Rafiul- Artificial Intelligence Engineer &amp; Research Enthusiast</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: { display: ['PT Sans','sans-serif'], body: ['DM Sans','sans-serif'] },
+      colors: { accent: '#FF6B2B', 'accent-light': '#FF8F5C' }
+    }
+  }
+}
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{font-family:'DM Sans',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+body{transition:background-color .3s,color .3s}
+
+/* noise overlay */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#FF6B2B;border-radius:99px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* nav underline animation */
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .22s cubic-bezier(.4,0,.2,1)}
+.nl:hover::after,.nl.on::after{width:100%}
+.nl.on{font-weight:500}
+
+/* shimmer button */
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+.shimmer:hover::after{left:160%}
+
+/* photo frames */
+.pf{overflow:hidden;background:#d4d4d8}
+.pf img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* card hover */
+.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s}
+.card-h:hover{transform:translateY(-4px)}
+
+/* skill tag */
+.stag{transition:border-color .18s}
+
+[x-cloak]{display:none!important}
+</style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+<!-- ═══ NAV ═══ -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+    <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
+      <span class="text-zinc-900 dark:text-white">Rafi</span><span class="text-accent">ul</span>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+      <li><a href="#services" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='services'?'on !text-zinc-900 dark:!text-white':''">Services</a></li>
+      <li><a href="#work"     class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='work'?'on !text-zinc-900 dark:!text-white':''">Work</a></li>
+      <li><a href="#about"   class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a></li>
+      <li><a href="#publications" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='publications'?'on !text-zinc-900 dark:!text-white':''">Publications</a></li>
+      <li><a href="#contact" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='contact'?'on !text-zinc-900 dark:!text-white':''">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      
+      <a href="./assets/Rafiul_Rabbi_Zahid_CV_ATS.pdf"
+   download="Rafiul_Rabbi_Zahid_CV.pdf"
+   title="Download CV"
+   aria-label="Download CV"
+   class="w-10 h-10 rounded-full border border-zinc-300 dark:border-zinc-700
+          flex items-center justify-center
+          text-zinc-700 dark:text-zinc-300
+          hover:bg-zinc-100 dark:hover:bg-zinc-800
+          hover:border-accent hover:text-accent
+          transition-all duration-300">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 384 512"
+         class="w-4 h-4 fill-current">
+        <path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm76.45 211.36l-96.42 95.7c-6.65 6.61-17.39 6.61-24.04 0l-96.42-95.7C73.42 337.29 80.54 320 94.82 320H160v-80c0-8.84 7.16-16 16-16h32c8.84 0 16 7.16 16 16v80h65.18c14.28 0 21.4 17.29 11.27 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"/>
+    </svg>
+
+</a>
+      
+      <!-- dark toggle -->
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
+        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg x-show="dark"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      </button>
+      <!-- hire me -->
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
+        Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <!-- hamburger -->
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Toggle menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg x-show="mm"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <div x-show="mm" x-cloak
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+    class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
+      <li><a href="#services" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Services</a></li>
+      <li><a href="#work"     @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Work</a></li>
+      <li><a href="#about"   @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
+      <li><a href="#reviews" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Reviews</a></li>
+      <li><a href="#contact" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Contact</a></li>
+      <li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">
+        <a href="#contact" @click="mm=false" class="inline-flex shimmer bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me →</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+  <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-zinc-200/50 dark:bg-zinc-800/30 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <div>
+        <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for work</p>
+        <h1 class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
+          Hi, I'm <span class="text-accent">Rafiul Rabbi Zahid</span>
+        </h1>
+        <p class="reveal d2 text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed max-w-md mb-10">
+          Freelance <strong class="font-medium text-zinc-700 dark:text-zinc-300">AI Engineer &amp; Research Enthusiast</strong>. AI Engineer specializing in Machine Learning, LLMs, RAG, and AIoT, with a passion for research-driven innovation and real-world intelligent systems.
+        </p>
+        <div class="reveal d3 flex flex-wrap gap-4">
+          <a href="./assets/Rafiul_Rabbi_Zahid_CV_ATS.pdf"
+            download="Rafiul_Rabbi_Zahid_CV.pdf"
+            class="shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
+
+              Download CV
+
+              <svg stroke="currentColor"
+                  fill="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 384 512"
+                  class="w-4 h-4"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm76.45 211.36l-96.42 95.7c-6.65 6.61-17.39 6.61-24.04 0l-96.42-95.7C73.42 337.29 80.54 320 94.82 320H160v-80c0-8.84 7.16-16 16-16h32c8.84 0 16 7.16 16 16v80h65.18c14.28 0 21.4 17.29 11.27 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"/>
+              </svg>
+
+          </a>
+          <a href="#contact" class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get in touch</a>
+        </div>
+        
+      </div>
+
+      <div class="reveal d2 flex justify-center md:justify-end">
+        <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <div class="pf w-full h-full rounded-3xl">
+            <img src="Rafiul Rabbi Zahid.jpg" alt="Rafiul- AI Engineer" loading="eager">
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-accent text-white font-display font-bold text-sm px-4 py-2.5 rounded-2xl shadow-lg">Open to projects and research</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Services</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- AI Application -->
+<article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+  <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+    <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/>
+    </svg>
+  </div>
+
+  <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">
+    AI Solutions
+  </h3>
+
+  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+    Design and develop intelligent AI applications using Machine Learning, LLMs, RAG, Computer Vision, and AI automation to solve real-world problems with scalable and efficient solutions.
+  </p>
+</article>
+
+
+<!-- Research -->
+<article class="reveal d2 card-h group bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
+  <div class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
+    <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+    </svg>
+  </div>
+
+  <h3 class="font-display font-bold text-xl text-white mb-3">
+    AI Research & Paper Writing
+  </h3>
+
+  <p class="text-sm text-zinc-400 leading-relaxed">
+    Assist with AI research projects, literature reviews, experiment design, model evaluation, and academic paper writing for conferences and journals following IEEE and Springer standards.
+  </p>
+</article>
+
+
+<!-- IoT -->
+<article class="reveal d3 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+  <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+    <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+    </svg>
+  </div>
+
+  <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">
+    IoT Applications
+  </h3>
+
+  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+    Build smart IoT systems using ESP32, Arduino, sensors, cloud connectivity, and edge AI for automation, monitoring, robotics, and intelligent real-world applications.
+  </p>
+</article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WORK ═══ -->
+<section id="work" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+      <div>
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">
+          Portfolio
+        </p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">
+          Featured Projects
+        </h2>
+      </div>
+
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- ================================================= -->
+      <!-- CHAOSGUARD AI -->
+      <!-- ================================================= -->
+
+      <article
+        class="card-h reveal d1 group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+
+        <div class="pf w-full h-auto">
+          <img src="toxic.png"
+            alt="ChaosGuard AI"
+            loading="lazy">
+        </div>
+
+        <div class="p-7">
+
+          <div class="flex flex-wrap gap-2 mb-4">
+
+            <span
+              class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">
+              NLP
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              Transformers
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              Explainable AI
+            </span>
+
+          </div>
+
+          <a href="https://github.com/rafiulzahid/ChoasGuard-AI">
+            <h3 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-2">
+              ChaosGuard AI
+            </h3>
+          </a>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">
+            An explainable multilingual AI platform for detecting toxic,
+            hateful, and harmful content in Bangla and Banglish.
+            Built using Transformer-based language models with uncertainty
+            estimation, Integrated Gradients, and LIME to provide transparent,
+            trustworthy, and interpretable content moderation.
+          </p>
+
+          <a href="https://github.com/rafiulzahid/ChoasGuard-AI"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">
+            View Project →
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- ================================================= -->
+      <!-- MEDIAURA -->
+      <!-- ================================================= -->
+
+      <article
+        class="card-h reveal d2 group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+
+        <div class="pf w-full h-auto">
+          <img src="medi.png"
+            alt="MediAura"
+            loading="lazy">
+        </div>
+
+        <div class="p-6">
+
+          <div class="flex flex-wrap gap-2 mb-3">
+
+            <span
+              class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">
+              LLM
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              RAG
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              Healthcare AI
+            </span>
+
+          </div>
+
+          <a href="https://github.com/rafiulzahid/MediAura-An-AI-Enhanced-Symptom-Analysis-and-Medical-Guidance-System-for-Personalized-Patient-Care">
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-1.5">
+              MediAura
+            </h3>
+          </a>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+            An intelligent Retrieval-Augmented Generation healthcare assistant
+            that combines semantic search, reranking, and LLMs to deliver
+            reliable medical information from trusted clinical documents.
+          </p>
+
+          <a href="https://github.com/rafiulzahid/MediAura-An-AI-Enhanced-Symptom-Analysis-and-Medical-Guidance-System-for-Personalized-Patient-Care"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">
+            View Project →
+          </a>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- ================================================= -->
+      <!-- EMAIL AUTOMATION -->
+      <!-- ================================================= -->
+
+      <article
+        class="card-h reveal d3 group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+
+        <div class="pf w-full h-auto">
+          <img src="n8n.png"
+            alt="Intelligent Email Automation"
+            loading="lazy">
+        </div>
+
+        <div class="p-6">
+
+          <div class="flex flex-wrap gap-2 mb-3">
+
+            <span
+              class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">
+              n8n
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              AI Automation
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              Workflow
+            </span>
+
+          </div>
+
+          <a href="https://github.com/rafiulzahid/Auto-email-reply">
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-1.5">
+              Intelligent Email Automation
+            </h3>
+          </a>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+            An AI-powered email automation system built with n8n that
+            classifies incoming emails, generates context-aware replies,
+            prioritizes important messages, and streamlines communication
+            through intelligent workflow automation.
+          </p>
+
+          <a href="https://github.com/rafiulzahid/Auto-email-reply"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">
+            View Project →
+          </a>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- ================================================= -->
+      <!-- VERTICULTURE -->
+      <!-- ================================================= -->
+
+      <article
+        class="card-h reveal d4 group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+
+        <div class="pf w-full h-auto">
+          <img src="verti.png"
+            alt="VertiCulture"
+            loading="lazy">
+        </div>
+
+        <div class="p-6">
+
+          <div class="flex flex-wrap gap-2 mb-3">
+
+            <span
+              class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">
+              AIoT
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              ESP32
+            </span>
+
+            <span
+              class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">
+              Machine Learning
+            </span>
+
+          </div>
+
+          <a href="#">
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-1.5">
+              VertiCulture
+            </h3>
+          </a>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+            A smart vertical farming platform integrating ESP32, IoT sensors,
+            cloud connectivity, and machine learning for intelligent crop
+            recommendation, automated monitoring, and precision agriculture.
+          </p>
+
+          <a href="#"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">
+            View Project →
+          </a>
+
+        </div>
+
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <!-- Image -->
+      <div class="reveal order-2 lg:order-1 flex justify-center">
+
+        <div class="relative w-full max-w-sm">
+
+          <img
+            src="Rafiul Rabbi Zahid.jpg"
+            alt="Rafiul Rabbi Zahid"
+            class="rounded-3xl object-cover shadow-2xl w-full">
+
+        </div>
+
+      </div>
+
+      <!-- Content -->
+      <div class="order-1 lg:order-2">
+
+        <p class="reveal text-xs font-semibold uppercase tracking-[0.25em] text-accent mb-3">
+          About Me
+        </p>
+
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-6">
+          AI Engineer,
+          Research Enthusiast
+        </h2>
+
+        <p class="reveal d2 text-zinc-600 dark:text-zinc-400 leading-8 mb-5">
+
+          I'm <strong>Rafiul Rabbi Zahid</strong>, an AI Engineer passionate
+          about building intelligent systems that solve real-world problems.
+          My interests span Artificial Intelligence, Large Language Models,
+          Retrieval-Augmented Generation (RAG), Computer Vision,
+          Explainable AI, and AI-powered automation.
+
+        </p>
+
+        <p class="reveal d3 text-zinc-600 dark:text-zinc-400 leading-8 mb-8">
+
+          Alongside developing practical AI applications, I actively conduct
+          research in AI and AIoT, publish academic papers, and explore
+          emerging technologies that bridge intelligent research with
+          real-world deployment.
+
+        </p>
+
+        <!-- Stats -->
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+
+          <div class="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 text-center">
+            <h3 class="text-2xl font-bold text-accent">5+</h3>
+            <p class="text-sm text-zinc-500">Research Papers</p>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 text-center">
+            <h3 class="text-2xl font-bold text-accent">5+</h3>
+            <p class="text-sm text-zinc-500">AI Projects</p>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 text-center">
+            <h3 class="text-2xl font-bold text-accent">2×</h3>
+            <p class="text-sm text-zinc-500">Hackathon Winner</p>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 text-center">
+            <h3 class="text-2xl font-bold text-accent">1+</h3>
+            <p class="text-sm text-zinc-500">Research Internships</p>
+          </div>
+
+        </div>
+
+        <!-- Skills -->
+
+        <div>
+
+          <p class="text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500 mb-4">
+            Technologies & Tools
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Python</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">PyTorch</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">TensorFlow</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">LLMs</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">RAG</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">LangChain</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Hugging Face</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">OpenCV</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Computer Vision</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">NLP</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">n8n</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Agentic AI</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">ESP32</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Arduino</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">AIoT</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Git</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Docker</span>
+
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm">Linux</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PUBLICATIONS ═══ -->
+<section id="publications" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">
+        Research
+      </p>
+
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">
+        Publications
+      </h2>
+
+      <p class="reveal d2 mt-4 max-w-3xl text-zinc-500 dark:text-zinc-400">
+        My research focuses on Artificial Intelligence, Machine Learning,
+        Large Language Models, AIoT, Computer Vision, and Explainable AI,
+        with publications in IEEE and international peer-reviewed venues.
+      </p>
+    </div>
+
+    <!-- Publication Cards -->
+    <div class="grid lg:grid-cols-2 gap-6">
+
+      <!-- Paper 1 -->
+      <article class="reveal d1 bg-white dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-200 dark:border-zinc-800 hover:border-accent transition">
+
+        <div class="flex items-center justify-between mb-5">
+          <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-accent text-xs font-semibold">
+            IEEE Conference
+          </span>
+
+          <span class="text-sm font-medium text-green-600 dark:text-green-400">
+            Published
+          </span>
+        </div>
+
+        <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-4 leading-snug">
+          VertiCulture: An Integrated IoT and Machine Learning Enabled Smart System for Optimizing Vertical Farming Environments
+        </h3>
+
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-5">
+          IEEE 2nd International Conference on Quantum Photonics, AI & Networking (QPAIN 2026)
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">AIoT</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">ESP32</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Machine Learning</span>
+        </div>
+
+      </article>
+
+      <!-- Paper 2 -->
+      <article class="reveal d1 bg-white dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-200 dark:border-zinc-800 hover:border-accent transition">
+
+        <div class="flex items-center justify-between mb-5">
+
+          <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-accent text-xs font-semibold">
+            Conference Paper
+          </span>
+
+          <span class="text-sm font-medium text-green-600 dark:text-green-400">
+            Accepted
+          </span>
+
+        </div>
+
+        <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-4 leading-snug">
+          Environmental Drivers of Lumpy Skin Disease: An Interpretable Ensemble Machine Learning Framework for Climatic Risk Assessment
+        </h3>
+
+        <p class="text-zinc-400 text-sm leading-relaxed mb-5">
+          ICECCT 2026
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Machine Learning</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Explainable AI</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Healthcare AI</span>
+        </div>
+
+      </article>
+
+      <!-- Paper 3 -->
+      <article class="reveal d3 bg-white dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-200 dark:border-zinc-800 hover:border-accent transition">
+
+        <div class="flex items-center justify-between mb-5">
+
+          <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-accent text-xs font-semibold">
+            Conference Paper
+          </span>
+
+          <span class="text-sm font-medium text-green-600 dark:text-green-400">
+            Accepted
+          </span>
+
+        </div>
+
+        <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-4 leading-snug">
+          An Explainable and Uncertainty-Aware Machine Learning Framework for Automated Smoking Risk Assessment Using Clinical Health Indicators
+        </h3>
+
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-5">
+          PECCII 2026, PUST
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Explainable AI</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Uncertainty AI</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Clinical ML</span>
+        </div>
+
+      </article>
+
+      <!-- Paper 4 -->
+      <article class="reveal d4 bg-white dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-200 dark:border-zinc-800 hover:border-accent transition">
+
+        <div class="flex items-center justify-between mb-5">
+
+          <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-accent text-xs font-semibold">
+            Journal Article
+          </span>
+
+          <span class="text-sm font-medium text-blue-600 dark:text-blue-400">
+            Published
+          </span>
+
+        </div>
+
+        <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-4 leading-snug">
+          IoT for Industrial Automation: A Review on Industry 4.0 Applications
+        </h3>
+
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-5">
+          International Journal of Information Engineering and Electronic Business (IJIEEB), MECS Press • 2026
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">IoT</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Industry 4.0</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">Review Paper</span>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="py-24 bg-zinc-950">
+    <div class="max-w-5xl mx-auto px-6">
+
+        <!-- Heading -->
+        <div class="text-center mb-16">
+
+            <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">
+                Contact
+            </p>
+
+            <h2 class="reveal d1 font-display font-bold text-3xl md:text-4xl text-white mb-4">
+                Get In Touch
+            </h2>
+
+            <p class="reveal d2 max-w-2xl mx-auto text-zinc-400 leading-relaxed">
+                I'm always open to discussing AI research, collaborations,
+                internships, freelance opportunities, or innovative AI and
+                AIoT projects.
+            </p>
+
+        </div>
+
+        <!-- Contact Information -->
+        <div class="max-w-3xl mx-auto space-y-8">
+
+            <!-- Location -->
+            <div class="reveal d1 flex items-center gap-5">
+
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 text-accent shrink-0">
+
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">
+                        Location
+                    </h4>
+
+                    <p class="text-base md:text-lg text-zinc-200">
+                        Gazipur, Bangladesh
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Phone -->
+            <div class="reveal d2 flex items-center gap-5">
+
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 text-accent shrink-0">
+
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.054 15.054 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.85 21 3 13.15 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">
+                        Phone
+                    </h4>
+
+                    <a href="tel:+8801798709761"
+                       class="text-base md:text-lg text-zinc-200 hover:text-accent transition-colors">
+                        +880 1798-709761
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Email -->
+            <div class="reveal d3 flex items-center gap-5">
+
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 text-accent shrink-0">
+
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 3.2L12 12 4 7.2V6l8 4.8L20 6v1.2z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">
+                        Email
+                    </h4>
+
+                    <a href="mailto:rafiulofficial18@gmail.com"
+                       class="text-base md:text-lg text-zinc-200 hover:text-accent transition-colors break-all">
+                        rafiulofficial18@gmail.com
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="reveal d4 flex items-center gap-5">
+
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 text-accent shrink-0">
+
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0H5C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.1 20H3.56V9H7.1zm-1.77-12.5a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20 20h-3.54v-5.61c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.15 1.46-2.15 2.97V20H8.9V9h3.25v1.5h.05c.45-.85 1.55-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V20z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">
+                        LinkedIn
+                    </h4>
+
+                    <a href="https://www.linkedin.com/in/rafiul-rabbi-zahid-39980a234"
+                       target="_blank"
+                       class="text-base md:text-lg text-zinc-200 hover:text-accent transition-colors break-all">
+                        linkedin.com/in/rafiul-rabbi-zahid
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- GitHub -->
+            <div class="reveal d4 flex items-center gap-5">
+
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 text-accent shrink-0">
+
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.79 8.2 11.38.6.11.82-.26.82-.58v-2.2c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.2.69.8.58A12.02 12.02 0 0024 12.3C24 5.67 18.63.3 12 .3z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">
+                        GitHub
+                    </h4>
+
+                    <a href="https://github.com/rafiulzahid"
+                       target="_blank"
+                       class="text-base md:text-lg text-zinc-200 hover:text-accent transition-colors">
+                        github.com/rafiulzahid
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+</main>
+
+<!-- <footer class="border-t border-zinc-100 dark:border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Eliott. All rights reserved. <br> Developed by <a href="https://lbegey78.gumroad.com/" target="_blank" class="font-bold">Laurent Begey</a> • Distributed by <a href="https://themewagon.com/" target="_blank" class="font-bold">ThemeWagon</a></p>
+    <p class="text-xs text-zinc-500">Built with
+      <a href="https://tailwindcss.com" rel="noopener noreferrer" target="_blank" class="hover:text-accent transition-colors">Tailwind CSS</a>
+      &amp;
+      <a href="https://alpinejs.dev" rel="noopener noreferrer" target="_blank" class="hover:text-accent transition-colors">Alpine.js</a>
+    </p>
+  </div>
+</footer> -->
+
+<script>
+function app() {
+  return {
+    dark: false,
+    mm: false,
+    sc: false,
+    s: 'hero',
+
+    init() {
+      // dark mode
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+      // scroll
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 20;
+        this.updateSection();
+      }, { passive: true });
+
+      // reveal
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      // year
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    },
+
+    updateSection() {
+      const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+      if (atBottom) { this.s = 'contact'; return; }
+      const ids = ['contact','blog','reviews','about','work','services','hero'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
